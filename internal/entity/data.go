@@ -10,7 +10,6 @@ type TestData struct {
 type Endpoint struct {
 	Host    string                 `json:"host" validate:"required,ip|url|hostname"`
 	Method  string                 `json:"method,omitempty" validate:"oneof=GET POST PUT PATCH DELETE"`
-	Params  map[string]string      `json:"params"`
 	Query   map[string]interface{} `json:"query"`
 	Body    map[string]interface{} `json:"body"`
 	Headers map[string]string      `json:"headers"`
