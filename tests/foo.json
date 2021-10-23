@@ -2,10 +2,10 @@
     "name": "foo bar",
     "endpoints": [
         {
-            "host": "foo bar"
+            "host": "127.0.0.1"
         },
         {
-            "host": "bar baz"
+            "host": "www.github.com"
         }
     ]
 }

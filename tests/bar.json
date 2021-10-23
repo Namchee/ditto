@@ -1,0 +1,11 @@
+{
+    "name": "bar bar",
+    "endpoints": [
+        {
+            "host": "foo bar"
+        },
+        {
+            "host": "bar baz"
+        }
+    ]
+}

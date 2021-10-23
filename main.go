@@ -1,19 +1,39 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 	"os"
 
+	"github.com/Namchee/ditto/internal/entity"
 	"github.com/Namchee/ditto/internal/service"
 )
 
-func main() {
-	cwd, err := os.Getwd()
+var (
+	infoLogger *log.Logger
+	errLogger  *log.Logger
+)
 
-	if err != nil {
-		log.Fatalln("wut")
-	}
+func init() {
+	infoLogger = log.New(os.Stdout, "[INFO] ", log.Lmsgprefix)
+	errLogger = log.New(os.Stderr, "[ERROR]", log.Ldate|log.Ltime|log.Lmsgprefix)
+}
+
+func main() {
+	cwd, _ := os.Getwd()
 	fs := os.DirFS(cwd)
 
-	service.ReadTestData(fs)
+	strict := flag.Bool("strict", false, "Panics if one of the test file is invalid")
+	flag.Parse()
+
+	cfg := &entity.Configuration{Strict: *strict}
+
+	files, err := service.ReadTestData(fs, cfg, infoLogger)
+
+	if err != nil {
+		errLogger.Fatalln(err)
+	}
+
+	fmt.Println(files)
 }
