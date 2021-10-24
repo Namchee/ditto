@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
+	"runtime"
 
 	"github.com/Namchee/ditto/internal/entity"
 	"github.com/Namchee/ditto/internal/service"
@@ -21,6 +21,9 @@ func init() {
 }
 
 func main() {
+	// Prevent infinite go routine spawn
+	runtime.GOMAXPROCS(4)
+
 	cwd, _ := os.Getwd()
 	fs := os.DirFS(cwd)
 
@@ -29,11 +32,19 @@ func main() {
 
 	cfg := &entity.Configuration{Strict: *strict}
 
-	files, err := service.ParseData(fs, cfg, infoLogger)
+	dir, err := service.GetDefs(fs, infoLogger)
 
 	if err != nil {
 		errLogger.Fatalln(err)
 	}
 
-	fmt.Println(files)
+	files, err := service.ParseData(dir, cfg, infoLogger)
+
+	if err != nil {
+		errLogger.Fatalln(err)
+	}
+
+	for _, file := range files {
+
+	}
 }
