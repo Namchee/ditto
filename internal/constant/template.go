@@ -3,7 +3,7 @@ package constant
 const (
 	// TestTemplate is a template to use when automatically creating a new test file
 	TestTemplate = `{
-	"name": "SampleTest",
+	"name": "%s",
 	"endpoints": [
 		{
 			"host": "https://www.google.com",
@@ -17,8 +17,13 @@ const (
 			"timeout": 3
 		},
 		{
-			"host": "https://www.github.com"
+			"host": "https://www.github.com",
+			"method": "POST",
+			"body": {
+				"foo": "bar"
+			}
 		}
 	]
 }`
+	DefaultTestName = "SampleTest"
 )
