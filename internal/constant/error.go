@@ -8,6 +8,12 @@ var (
 	ErrListDir = errors.New("[Reader] Failed to list file directory")
 )
 
+var (
+	ErrCreateRequest = errors.New("[Fetcher] Failed to create new request")
+	ErrFetchResponse = errors.New("[Fetcher] Failed to fetch response")
+	ErrReadResponse  = errors.New("[Fetcher] Failed to read response")
+)
+
 // Dynamic error templates
 const (
 	ErrFileOpen    = "[Reader] Failed to open file %s"

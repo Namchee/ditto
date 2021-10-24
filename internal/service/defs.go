@@ -10,8 +10,8 @@ import (
 	"github.com/Namchee/ditto/internal/constant"
 )
 
-// GetTestFiles searchs desired test directory for test files
-func GetTestFiles(fsys fs.FS, logger *log.Logger) ([]fs.File, error) {
+// GetDefs searchs desired test directory for test definition
+func GetDefs(fsys fs.FS, logger *log.Logger) ([]fs.File, error) {
 	if _, err := fs.Stat(fsys, constant.TEST_DIR); os.IsNotExist(err) {
 		return nil, constant.ErrNoDir
 	}

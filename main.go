@@ -29,7 +29,7 @@ func main() {
 
 	cfg := &entity.Configuration{Strict: *strict}
 
-	files, err := service.ReadTestData(fs, cfg, infoLogger)
+	files, err := service.ParseData(fs, cfg, infoLogger)
 
 	if err != nil {
 		errLogger.Fatalln(err)
