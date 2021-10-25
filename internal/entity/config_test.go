@@ -29,7 +29,7 @@ func TestReadConfiguration(t *testing.T) {
 			path:     "ditto.config.json",
 			contents: []byte(`{ foo: "bar" }`),
 			want: &Configuration{
-				Directory: "ditto_test",
+				Directory: "ditto-test",
 				Strict:    false,
 			},
 		},

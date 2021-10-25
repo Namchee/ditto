@@ -29,7 +29,7 @@ func TestFormatResult(t *testing.T) {
 				Name: "TestThisOne",
 				Diff: []int{},
 			},
-			want: "TestThisOne: ✔️ PASS",
+			want: "TestThisOne: ✅ PASS",
 		},
 		{
 			name: "should format failed test",
