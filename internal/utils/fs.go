@@ -1,6 +1,8 @@
 package utils
 
-import "io/fs"
+import (
+	"io/fs"
+)
 
 // IsDirExist checks if a directory exists or not
 func IsDirExist(fsys fs.FS, name string) bool {

@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/Namchee/ditto/internal/constant"
@@ -36,6 +37,10 @@ func main() {
 
 	if len(os.Args) > 2 {
 		testname = os.Args[2]
+	}
+
+	if !strings.HasSuffix(testname, ".json") {
+		testname += ".json"
 	}
 
 	infoLogger.Println("Checking test directory availabilty")

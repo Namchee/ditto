@@ -2,7 +2,7 @@
 	"name": "SampleRESTAPITest",
 	"endpoints": [
 		{
-			"host": "localhost:3001/api/apps",
+			"host": "http://localhost:3001/api/apps",
 			"method": "GET",
 			"query": {
 				"limit": 10
