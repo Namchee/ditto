@@ -1,6 +1,10 @@
 package service
 
-import "github.com/Namchee/ditto/internal/entity"
+import (
+	"sync"
+
+	"github.com/Namchee/ditto/internal/entity"
+)
 
 // TestRunner runs and executes test concurrently
 type TestRunner struct {
@@ -15,7 +19,11 @@ func NewTestRunner(data *entity.TestData) *TestRunner {
 }
 
 // RunTest executes the test and returns the test result
-func (r *TestRunner) RunTest() *entity.TestResult {
+func (r *TestRunner) RunTest(
+	wg *sync.WaitGroup,
+	ch chan<- *entity.TestResult,
+) {
+	defer wg.Done()
 	var errChannel = make(chan error)
 	var channels [](chan string)
 	var result []string
@@ -30,7 +38,7 @@ func (r *TestRunner) RunTest() *entity.TestResult {
 	}
 
 	if e := <-errChannel; e != nil {
-		return &entity.TestResult{
+		ch <- &entity.TestResult{
 			Name:  r.data.Name,
 			Error: e,
 			Diff:  []int{},
@@ -45,7 +53,7 @@ func (r *TestRunner) RunTest() *entity.TestResult {
 
 	diff := GetDiff(result)
 
-	return &entity.TestResult{
+	ch <- &entity.TestResult{
 		Name:  r.data.Name,
 		Error: nil,
 		Diff:  diff,
