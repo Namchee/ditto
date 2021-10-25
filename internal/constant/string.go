@@ -2,7 +2,7 @@ package constant
 
 const (
 	// PassEmoji is the emoji to use when a test passes
-	PassEmoji = "✔️"
+	PassEmoji = "✅"
 	// PassText is the text to show when a test passes
 	PassText = "PASS"
 

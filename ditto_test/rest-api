@@ -1,0 +1,25 @@
+{
+	"name": "SampleRESTAPITest",
+	"endpoints": [
+		{
+			"host": "localhost:3001/api/apps",
+			"method": "GET",
+			"query": {
+				"limit": 10
+			},
+			"headers": {
+				"Accept": "application/json"
+			}
+		},
+		{
+			"host": "https://ojk-invest-api.vercel.app/api/apps",
+			"method": "GET",
+			"query": {
+				"limit": 10
+			},
+			"headers": {
+				"Accept": "application/json"
+			}
+		}
+	]
+}

@@ -2,19 +2,20 @@ package service
 
 import "github.com/Namchee/ditto/internal/entity"
 
-type testRunner struct {
+// TestRunner runs and executes test concurrently
+type TestRunner struct {
 	data *entity.TestData
 }
 
-// NewTestRunner creates a new test runner that executes endpoint concurrently
-func NewTestRunner(data *entity.TestData) *testRunner {
-	return &testRunner{
+// NewTestRunner creates a new test runner that executes test concurrently
+func NewTestRunner(data *entity.TestData) *TestRunner {
+	return &TestRunner{
 		data: data,
 	}
 }
 
 // RunTest executes the test and returns the test result
-func (r *testRunner) RunTest() *entity.TestResult {
+func (r *TestRunner) RunTest() *entity.TestResult {
 	var errChannel = make(chan error)
 	var channels [](chan string)
 	var result []string
@@ -51,7 +52,7 @@ func (r *testRunner) RunTest() *entity.TestResult {
 	}
 }
 
-func (r *testRunner) wrapFetcher(
+func (r *TestRunner) wrapFetcher(
 	f *Fetcher,
 	ch chan<- string,
 	errC chan<- error,
