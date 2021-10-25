@@ -9,15 +9,16 @@ import (
 
 	"github.com/Namchee/ditto/internal/constant"
 	"github.com/Namchee/ditto/internal/entity"
-	"github.com/briandowns/spinner"
 )
 
 var (
 	infoLogger *log.Logger
+	errLogger  *log.Logger
 )
 
 func init() {
 	infoLogger = log.New(os.Stdout, "[INFO] ", log.Lmsgprefix)
+	errLogger = log.New(os.Stderr, "[ERROR] ", log.Lmsgprefix)
 }
 
 func main() {
@@ -37,25 +38,20 @@ func main() {
 		testname = os.Args[2]
 	}
 
-	s := spinner.New(spinner.CharSets[14], time.Second)
-	s.Start()
-
-	s.Suffix = "Checking test directory availabilty"
+	infoLogger.Println("Checking test directory availabilty")
 
 	if _, err := fs.Stat(fsys, config.Directory); os.IsNotExist(err) {
-		s.Suffix = "Creating test directory"
+		infoLogger.Println("Creating test directory")
 
 		testDir := fmt.Sprintf("%s/%s", cwd, config.Directory)
 		err = os.MkdirAll(testDir, os.ModePerm)
 
 		if err != nil {
-			s.FinalMSG = "❌ Failed to create test directory"
-			s.Stop()
-			return
+			errLogger.Fatalln("❌ Failed to create test directory")
 		}
 	}
 
-	s.Suffix = "Creating new sample test file"
+	infoLogger.Println("Creating new sample test file")
 	filePath := fmt.Sprintf("%s/%s", config.Directory, filename)
 
 	if _, err := fs.Stat(fsys, filePath); os.IsNotExist(err) {
@@ -63,15 +59,11 @@ func main() {
 		err := os.WriteFile(filePath, []byte(testDef), 0755)
 
 		if err != nil {
-			s.FinalMSG = "❌ Failed to create sample test file."
-			s.Stop()
-			return
+			errLogger.Fatalln("❌ Failed to create sample test file.")
 		}
 
-		s.FinalMSG = fmt.Sprintf("✔️ Successfully created new sample test file %s", filename)
+		infoLogger.Printf("✔️ Successfully created new sample test file %s\n", filename)
 	} else {
-		s.FinalMSG = "❌ Failed to create sample test file. File already exist."
+		errLogger.Fatalln("❌ Failed to create sample test file. File already exist.")
 	}
-
-	s.Stop()
 }
