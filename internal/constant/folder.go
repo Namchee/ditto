@@ -1,6 +1,6 @@
 package constant
 
-// Test data storage
 const (
-	TEST_DIR = "tests"
+	// DefaultTestDir is default test directory
+	DefaultTestDir = "ditto_test"
 )

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"log"
 	"os"
 	"runtime"
@@ -25,20 +24,17 @@ func main() {
 	runtime.GOMAXPROCS(4)
 
 	cwd, _ := os.Getwd()
-	fs := os.DirFS(cwd)
+	fsys := os.DirFS(cwd)
 
-	strict := flag.Bool("strict", false, "Panics if one of the test file is invalid")
-	flag.Parse()
+	config := entity.ReadConfiguration(fsys, infoLogger)
 
-	cfg := &entity.Configuration{Strict: *strict}
-
-	dir, err := service.GetDefs(fs, infoLogger)
+	dir, err := service.GetDefs(fsys, config, infoLogger)
 
 	if err != nil {
 		errLogger.Fatalln(err)
 	}
 
-	files, err := service.ParseData(dir, cfg, infoLogger)
+	files, err := service.ParseData(dir, config, infoLogger)
 
 	if err != nil {
 		errLogger.Fatalln(err)

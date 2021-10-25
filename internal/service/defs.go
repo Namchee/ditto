@@ -4,20 +4,20 @@ import (
 	"fmt"
 	"io/fs"
 	"log"
-	"os"
 	"path/filepath"
 
 	"github.com/Namchee/ditto/internal/constant"
+	"github.com/Namchee/ditto/internal/entity"
+	"github.com/Namchee/ditto/internal/utils"
 )
 
 // GetDefs searchs desired test directory for test definition
-func GetDefs(fsys fs.FS, logger *log.Logger) ([]fs.File, error) {
-	if _, err := fs.Stat(fsys, constant.TEST_DIR); os.IsNotExist(err) {
+func GetDefs(fsys fs.FS, config *entity.Configuration, logger *log.Logger) ([]fs.File, error) {
+	if utils.IsDirExist(fsys, config.Directory) {
 		return nil, constant.ErrNoDir
 	}
 
-	dir, err := fs.ReadDir(fsys, constant.TEST_DIR)
-
+	dir, err := fs.ReadDir(fsys, config.Directory)
 	if err != nil {
 		return nil, constant.ErrListDir
 	}
@@ -29,7 +29,7 @@ func GetDefs(fsys fs.FS, logger *log.Logger) ([]fs.File, error) {
 
 		if filepath.Ext(name) == "json" {
 			file, err := fsys.Open(
-				fmt.Sprintf("%s/%s", constant.TEST_DIR, name),
+				fmt.Sprintf("%s/%s", config.Directory, name),
 			)
 
 			if err != nil {

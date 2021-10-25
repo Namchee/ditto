@@ -8,10 +8,18 @@ var (
 	ErrListDir = errors.New("[Reader] Failed to list file directory")
 )
 
+// Fetcher errors
 var (
 	ErrCreateRequest = errors.New("[Fetcher] Failed to create new request")
 	ErrFetchResponse = errors.New("[Fetcher] Failed to fetch response")
 	ErrReadResponse  = errors.New("[Fetcher] Failed to read response")
+)
+
+// Config errors
+var (
+	ErrNoConfig     = errors.New("[Configuration] Missing config file. Using default configuration.")
+	ErrReadConfig   = errors.New("[Configuration] Failed to read config file. Ignoring configuration file.")
+	ErrDecodeConfig = errors.New("[Configuration] Failed to decode config file. Ignoring configuration file.")
 )
 
 // Dynamic error templates

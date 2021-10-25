@@ -3,14 +3,29 @@ package main
 import (
 	"fmt"
 	"io/fs"
+	"log"
 	"os"
 	"time"
 
 	"github.com/Namchee/ditto/internal/constant"
+	"github.com/Namchee/ditto/internal/entity"
 	"github.com/briandowns/spinner"
 )
 
+var (
+	infoLogger *log.Logger
+)
+
+func init() {
+	infoLogger = log.New(os.Stdout, "[INFO] ", log.Lmsgprefix)
+}
+
 func main() {
+	cwd, _ := os.Getwd()
+	fsys := os.DirFS(cwd)
+
+	config := entity.ReadConfiguration(fsys, infoLogger)
+
 	filename := fmt.Sprintf("%d.json", time.Now().Unix())
 	testname := constant.DefaultTestName
 
@@ -27,13 +42,10 @@ func main() {
 
 	s.Suffix = "Checking test directory availabilty"
 
-	cwd, _ := os.Getwd()
-	fsys := os.DirFS(cwd)
-
-	if _, err := fs.Stat(fsys, constant.TEST_DIR); os.IsNotExist(err) {
+	if _, err := fs.Stat(fsys, config.Directory); os.IsNotExist(err) {
 		s.Suffix = "Creating test directory"
 
-		testDir := fmt.Sprintf("%s/%s", cwd, constant.TEST_DIR)
+		testDir := fmt.Sprintf("%s/%s", cwd, config.Directory)
 		err = os.MkdirAll(testDir, os.ModePerm)
 
 		if err != nil {
@@ -44,7 +56,7 @@ func main() {
 	}
 
 	s.Suffix = "Creating new sample test file"
-	filePath := fmt.Sprintf("%s/%s", constant.TEST_DIR, filename)
+	filePath := fmt.Sprintf("%s/%s", config.Directory, filename)
 
 	if _, err := fs.Stat(fsys, filePath); os.IsNotExist(err) {
 		testDef := fmt.Sprintf(constant.TestTemplate, testname)
