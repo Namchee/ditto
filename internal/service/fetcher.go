@@ -56,7 +56,7 @@ func (f *Fetcher) Fetch() (string, error) {
 	resp, err := f.client.Do(request)
 
 	if err != nil {
-		return "", constant.ErrFetchResponse
+		return "", fmt.Errorf(constant.ErrFetchResponse, err)
 	}
 	defer resp.Body.Close()
 

@@ -6,3 +6,9 @@ type TestResult struct {
 	Error error
 	Diff  []int
 }
+
+// TestResult wraps a fetcher result
+type FetcherResult struct {
+	Status int
+	Body   string
+}

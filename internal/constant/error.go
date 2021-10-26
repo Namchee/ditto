@@ -11,7 +11,6 @@ var (
 // Fetcher errors
 var (
 	ErrCreateRequest = errors.New("[Fetcher] Failed to create new request")
-	ErrFetchResponse = errors.New("[Fetcher] Failed to fetch response")
 	ErrReadResponse  = errors.New("[Fetcher] Failed to read response")
 )
 
@@ -24,7 +23,8 @@ var (
 
 // Dynamic error templates
 const (
-	ErrFileOpen    = "[Reader] Failed to open file %s"
-	ErrFileParse   = "[Reader] Failed to parse file %s"
-	ErrFileInvalid = "[Reader] Invalid file format for file %s"
+	ErrFileOpen      = "[Reader] Failed to open file %s"
+	ErrFileParse     = "[Reader] Failed to parse file %s"
+	ErrFileInvalid   = "[Reader] Invalid file format for file %s"
+	ErrFetchResponse = "[Fetcher] Failed to fetch response: %s"
 )

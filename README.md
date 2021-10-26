@@ -4,6 +4,11 @@
 
 <h1 align="center">Ditto</h1>
 
-Ditto is a CLI tool that helps you verify multiple HTTP endpoints implementation.
+Ditto is a test runner that helps you test and verify multiple HTTP endpoints implementation.
 
 One of the use case of Ditto is automated migration testing.
+
+## Features
+
+1. 🚄 Fast and performant out of the box.
+2. ⚙️ Configurable to suit your needs.

@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -57,7 +59,7 @@ func TestFetcher_Fetch(t *testing.T) {
 				Method: "GET",
 			},
 			want: "",
-			err:  constant.ErrFetchResponse,
+			err:  errors.New(`[Fetcher] Failed to fetch response: Get "": unsupported protocol scheme ""`),
 		},
 		{
 			name: "should throw an error when response body is malformer",
@@ -100,6 +102,7 @@ func TestFetcher_Fetch(t *testing.T) {
 
 			got, err := f.Fetch()
 
+			fmt.Println(err)
 			assert.Equal(t, tc.want, got)
 			assert.Equal(t, tc.err, err)
 		})
