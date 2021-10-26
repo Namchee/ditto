@@ -27,7 +27,7 @@ func GetDefs(fsys fs.FS, config *entity.Configuration, logger *log.Logger) ([]fs
 	for i := range dir {
 		name := dir[i].Name()
 
-		if filepath.Ext(name) == "json" {
+		if filepath.Ext(name) == ".json" {
 			file, err := fsys.Open(
 				fmt.Sprintf("%s/%s", config.Directory, name),
 			)

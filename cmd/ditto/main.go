@@ -33,24 +33,29 @@ func main() {
 	config := entity.ReadConfiguration(fsys, infoLogger)
 
 	infoLogger.Println("Reading test files")
-	dir, err := service.GetDefs(fsys, config, infoLogger)
+	files, err := service.GetDefs(fsys, config, infoLogger)
 
 	if err != nil {
 		errLogger.Fatalln(err)
+	}
+
+	if len(files) == 0 {
+		infoLogger.Println("No test to run.")
+		os.Exit(0)
 	}
 
 	infoLogger.Println("Parsing test files")
-	files, err := service.ParseData(dir, config, infoLogger)
+	data, err := service.ParseData(files, config, infoLogger)
 
 	if err != nil {
 		errLogger.Fatalln(err)
 	}
 
-	channel := make(chan *entity.TestResult, len(files))
+	channel := make(chan *entity.TestResult, len(data))
 	wg := &sync.WaitGroup{}
 
 	infoLogger.Println("Running tests")
-	for _, file := range files {
+	for _, file := range data {
 		runner := service.NewTestRunner(file)
 		wg.Add(1)
 
