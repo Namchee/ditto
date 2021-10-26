@@ -32,7 +32,7 @@ func (r *TestRunner) RunTest(
 	rwg := &sync.WaitGroup{}
 
 	for _, ep := range r.data.Endpoints {
-		fetcher := NewFetcher(&ep)
+		fetcher := NewFetcher(ep)
 
 		rwg.Add(1)
 		go r.wrapFetcher(rwg, fetcher, rch, err)
@@ -40,7 +40,7 @@ func (r *TestRunner) RunTest(
 
 	go r.cleanup(rwg, rch, err)
 
-	if e := <-err; err != nil {
+	if e := <-err; e != nil {
 		ch <- &entity.TestResult{
 			Name:  r.data.Name,
 			Error: e,

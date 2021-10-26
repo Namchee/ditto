@@ -38,13 +38,13 @@ func TestFetcher_Fetch(t *testing.T) {
 
 	tests := []struct {
 		name     string
-		endpoint *entity.Endpoint
+		endpoint entity.Endpoint
 		want     string
 		err      error
 	}{
 		{
 			name: "should throw an error when request cannot be created",
-			endpoint: &entity.Endpoint{
+			endpoint: entity.Endpoint{
 				Method: "(",
 				Host:   server.URL,
 			},
@@ -53,7 +53,7 @@ func TestFetcher_Fetch(t *testing.T) {
 		},
 		{
 			name: "should throw an error when request cannot be sent",
-			endpoint: &entity.Endpoint{
+			endpoint: entity.Endpoint{
 				Method: "GET",
 			},
 			want: "",
@@ -61,7 +61,7 @@ func TestFetcher_Fetch(t *testing.T) {
 		},
 		{
 			name: "should throw an error when response body is malformer",
-			endpoint: &entity.Endpoint{
+			endpoint: entity.Endpoint{
 				Method: "GET",
 				Host:   server.URL,
 				Query: map[string]interface{}{
@@ -73,7 +73,7 @@ func TestFetcher_Fetch(t *testing.T) {
 		},
 		{
 			name: "success with plain body",
-			endpoint: &entity.Endpoint{
+			endpoint: entity.Endpoint{
 				Method: "GET",
 				Host:   server.URL,
 			},
@@ -82,7 +82,7 @@ func TestFetcher_Fetch(t *testing.T) {
 		},
 		{
 			name: "success with query",
-			endpoint: &entity.Endpoint{
+			endpoint: entity.Endpoint{
 				Method: "GET",
 				Host:   server.URL,
 				Query: map[string]interface{}{

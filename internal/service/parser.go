@@ -17,7 +17,6 @@ func ParseData(
 	cfg *entity.Configuration,
 	logger *log.Logger,
 ) ([]*entity.TestData, error) {
-	var data entity.TestData
 	var testData []*entity.TestData
 	var err error
 
@@ -25,6 +24,7 @@ func ParseData(
 
 	for _, file := range files {
 		f, _ := file.Stat()
+		var data entity.TestData
 
 		if err = json.NewDecoder(file).Decode(&data); err != nil {
 			if cfg.Strict {

@@ -2,7 +2,7 @@
 	"name": "SampleRESTAPITest",
 	"endpoints": [
 		{
-			"host": "http://localhost:3001/api/apps",
+			"host": "https://ojk-invest-api.vercel.app/api/illegals",
 			"method": "GET",
 			"query": {
 				"limit": 10
@@ -12,7 +12,7 @@
 			}
 		},
 		{
-			"host": "https://ojk-invest-api.vercel.app/api/apps",
+			"host": "https://ojk-invest-api.vercel.app/api/illegals",
 			"method": "GET",
 			"query": {
 				"limit": 10

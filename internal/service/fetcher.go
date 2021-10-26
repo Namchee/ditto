@@ -14,12 +14,12 @@ import (
 
 // Fetcher constructs the request
 type Fetcher struct {
-	endpoint *entity.Endpoint
+	endpoint entity.Endpoint
 	client   *http.Client
 }
 
 // NewFetcher creates a new fetcher that can be used to do request calls
-func NewFetcher(ep *entity.Endpoint) *Fetcher {
+func NewFetcher(ep entity.Endpoint) *Fetcher {
 	return &Fetcher{
 		endpoint: ep,
 		client: &http.Client{
