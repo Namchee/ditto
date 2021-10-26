@@ -55,11 +55,11 @@ func main() {
 	wg := &sync.WaitGroup{}
 
 	infoLogger.Println("Running tests")
-	for _, file := range data {
-		runner := service.NewTestRunner(file)
+	for _, d := range data {
+		runner := service.NewTestRunner(d)
 		wg.Add(1)
 
-		infoLogger.Printf("Executing test %s", file.Name)
+		infoLogger.Printf("Executing test %s", d.Name)
 		go runner.RunTest(wg, channel)
 	}
 

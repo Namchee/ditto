@@ -1,0 +1,25 @@
+{
+	"name": "SampleRESTAPITestBar",
+	"endpoints": [
+		{
+			"host": "http://localhost:3001/api/illegals",
+			"method": "GET",
+			"query": {
+				"limit": 10
+			},
+			"headers": {
+				"Accept": "application/json"
+			}
+		},
+		{
+			"host": "https://ojk-invest-api.vercel.app/api/illegals",
+			"method": "GET",
+			"query": {
+				"limit": 10
+			},
+			"headers": {
+				"Accept": "application/json"
+			}
+		}
+	]
+}

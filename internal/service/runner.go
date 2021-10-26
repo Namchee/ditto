@@ -24,31 +24,33 @@ func (r *TestRunner) RunTest(
 	ch chan<- *entity.TestResult,
 ) {
 	defer wg.Done()
-	var errChannel = make(chan error)
-	var channels [](chan string)
 	var result []string
+
+	err := make(chan error)
+	rch := make(chan string, len(r.data.Endpoints))
+
+	rwg := &sync.WaitGroup{}
 
 	for _, ep := range r.data.Endpoints {
 		fetcher := NewFetcher(&ep)
-		channel := make(chan string)
 
-		channels = append(channels, channel)
-
-		go r.wrapFetcher(fetcher, channel, errChannel)
+		rwg.Add(1)
+		go r.wrapFetcher(rwg, fetcher, rch, err)
 	}
 
-	if e := <-errChannel; e != nil {
+	go r.cleanup(rwg, rch, err)
+
+	if e := <-err; err != nil {
 		ch <- &entity.TestResult{
 			Name:  r.data.Name,
 			Error: e,
-			Diff:  []int{},
+			Diff:  nil,
 		}
+		return
 	}
 
-	for _, cha := range channels {
-		res := <-cha
-
-		result = append(result, res)
+	for cha := range rch {
+		result = append(result, cha)
 	}
 
 	diff := GetDiff(result)
@@ -61,10 +63,12 @@ func (r *TestRunner) RunTest(
 }
 
 func (r *TestRunner) wrapFetcher(
+	wg *sync.WaitGroup,
 	f *Fetcher,
 	ch chan<- string,
 	errC chan<- error,
 ) {
+	defer wg.Done()
 	result, err := f.Fetch()
 
 	if err != nil {
@@ -73,4 +77,14 @@ func (r *TestRunner) wrapFetcher(
 	}
 
 	ch <- result
+}
+
+func (r *TestRunner) cleanup(
+	wg *sync.WaitGroup,
+	ch chan string,
+	err chan error,
+) {
+	wg.Wait()
+	close(ch)
+	close(err)
 }
