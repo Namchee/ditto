@@ -20,7 +20,7 @@ func TestReadConfiguration(t *testing.T) {
 			path:     "foo",
 			contents: []byte{},
 			want: &Configuration{
-				Directory: "ditto_test",
+				Directory: "ditto-test",
 				Strict:    false,
 			},
 		},

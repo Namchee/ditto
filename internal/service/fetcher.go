@@ -1,6 +1,8 @@
 package service
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -36,11 +38,9 @@ func (f *Fetcher) Fetch() (string, error) {
 		query.Add(k, fmt.Sprintf("%v", v))
 	}
 
-	for k, v := range f.endpoint.Body {
-		query.Add(k, fmt.Sprintf("%v", v))
-	}
+	reqBody, _ := json.Marshal(f.endpoint.Body)
 
-	request, err := http.NewRequest(f.endpoint.Method, f.endpoint.Host, nil)
+	request, err := http.NewRequest(f.endpoint.Method, f.endpoint.Host, bytes.NewBuffer(reqBody))
 
 	if err != nil {
 		return "", constant.ErrCreateRequest
