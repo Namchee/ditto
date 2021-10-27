@@ -75,18 +75,12 @@ func main() {
 	var fails []*entity.RunnerResult
 
 	for result := range channel {
-		var bodies []string
+		fail := utils.HasDiff(result.Result, config)
 
-		for _, r := range result.Result {
-			bodies = append(bodies, r.Response)
-		}
-		diff := utils.GetDiff(bodies)
-		pass := len(diff) == 0
-
-		formatted := utils.FormatResult(result, pass)
+		formatted := utils.FormatResult(result, !fail)
 		fmt.Println(formatted)
 
-		if !pass {
+		if fail {
 			fails = append(fails, result)
 		}
 	}
