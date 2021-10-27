@@ -11,34 +11,34 @@ import (
 func TestFormatResult(t *testing.T) {
 	tests := []struct {
 		name   string
-		args   *entity.TestResult
+		args   *entity.RunnerResult
 		status bool
 		want   string
 	}{
 		{
 			name: "should format error test",
-			args: &entity.TestResult{
+			args: &entity.RunnerResult{
 				Name:   "TestThisOne",
 				Error:  errors.New("foo bar"),
-				Result: []string{},
+				Result: []*entity.FetchResult{},
 			},
 			status: false,
 			want:   "TestThisOne: ❌ FAIL = Failed to run test: foo bar",
 		},
 		{
 			name: "should format passed test",
-			args: &entity.TestResult{
+			args: &entity.RunnerResult{
 				Name:   "TestThisOne",
-				Result: []string{},
+				Result: []*entity.FetchResult{},
 			},
 			status: true,
 			want:   "TestThisOne: ✅ PASS",
 		},
 		{
 			name: "should format failed test",
-			args: &entity.TestResult{
+			args: &entity.RunnerResult{
 				Name:   "TestThisOne",
-				Result: []string{},
+				Result: []*entity.FetchResult{},
 			},
 			status: false,
 			want:   "TestThisOne: ❌ FAIL. Please check the generated test log.",

@@ -31,7 +31,7 @@ func NewFetcher(ep entity.Endpoint) *Fetcher {
 }
 
 // Fetch constructs request, send the request, and return a response string from it
-func (f *Fetcher) Fetch() (string, error) {
+func (f *Fetcher) Fetch() (*entity.FetchResult, error) {
 	query := url.Values{}
 
 	for k, v := range f.endpoint.Query {
@@ -43,7 +43,7 @@ func (f *Fetcher) Fetch() (string, error) {
 	request, err := http.NewRequest(f.endpoint.Method, f.endpoint.Host, bytes.NewBuffer(reqBody))
 
 	if err != nil {
-		return "", constant.ErrCreateRequest
+		return nil, constant.ErrCreateRequest
 	}
 
 	request.URL.RawQuery = query.Encode()
@@ -56,15 +56,19 @@ func (f *Fetcher) Fetch() (string, error) {
 	resp, err := f.client.Do(request)
 
 	if err != nil {
-		return "", fmt.Errorf(constant.ErrFetchResponse, err)
+		return nil, fmt.Errorf(constant.ErrFetchResponse, err)
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
-		return "", constant.ErrReadResponse
+		return nil, constant.ErrReadResponse
 	}
 
-	return string(body), nil
+	return &entity.FetchResult{
+		Status:   resp.StatusCode,
+		Response: string(body),
+		Endpoint: f.endpoint,
+	}, nil
 }

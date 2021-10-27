@@ -21,13 +21,13 @@ func NewTestRunner(data *entity.TestData) *TestRunner {
 // RunTest executes the test and returns the test result
 func (r *TestRunner) RunTest(
 	wg *sync.WaitGroup,
-	ch chan<- *entity.TestResult,
+	ch chan<- *entity.RunnerResult,
 ) {
 	defer wg.Done()
-	var result []string
+	var result []*entity.FetchResult
 
 	err := make(chan error)
-	rch := make(chan string, len(r.data.Endpoints))
+	rch := make(chan *entity.FetchResult, len(r.data.Endpoints))
 
 	rwg := &sync.WaitGroup{}
 
@@ -41,7 +41,7 @@ func (r *TestRunner) RunTest(
 	go r.cleanup(rwg, rch, err)
 
 	if e := <-err; e != nil {
-		ch <- &entity.TestResult{
+		ch <- &entity.RunnerResult{
 			Name:  r.data.Name,
 			Error: e,
 		}
@@ -52,7 +52,7 @@ func (r *TestRunner) RunTest(
 		result = append(result, cha)
 	}
 
-	ch <- &entity.TestResult{
+	ch <- &entity.RunnerResult{
 		Name:   r.data.Name,
 		Result: result,
 	}
@@ -61,7 +61,7 @@ func (r *TestRunner) RunTest(
 func (r *TestRunner) wrapFetcher(
 	wg *sync.WaitGroup,
 	f *Fetcher,
-	ch chan<- string,
+	ch chan<- *entity.FetchResult,
 	errC chan<- error,
 ) {
 	defer wg.Done()
@@ -77,7 +77,7 @@ func (r *TestRunner) wrapFetcher(
 
 func (r *TestRunner) cleanup(
 	wg *sync.WaitGroup,
-	ch chan string,
+	ch chan *entity.FetchResult,
 	err chan error,
 ) {
 	wg.Wait()

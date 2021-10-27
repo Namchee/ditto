@@ -41,7 +41,7 @@ func TestFetcher_Fetch(t *testing.T) {
 	tests := []struct {
 		name     string
 		endpoint entity.Endpoint
-		want     string
+		want     *entity.FetchResult
 		err      error
 	}{
 		{
@@ -50,7 +50,7 @@ func TestFetcher_Fetch(t *testing.T) {
 				Method: "(",
 				Host:   server.URL,
 			},
-			want: "",
+			want: nil,
 			err:  constant.ErrCreateRequest,
 		},
 		{
@@ -58,11 +58,11 @@ func TestFetcher_Fetch(t *testing.T) {
 			endpoint: entity.Endpoint{
 				Method: "GET",
 			},
-			want: "",
+			want: nil,
 			err:  errors.New(`[Fetcher] Failed to fetch response: Get "": unsupported protocol scheme ""`),
 		},
 		{
-			name: "should throw an error when response body is malformer",
+			name: "should throw an error when response body is malformed",
 			endpoint: entity.Endpoint{
 				Method: "GET",
 				Host:   server.URL,
@@ -70,7 +70,7 @@ func TestFetcher_Fetch(t *testing.T) {
 					"err": 1,
 				},
 			},
-			want: "",
+			want: nil,
 			err:  constant.ErrReadResponse,
 		},
 		{
@@ -79,8 +79,15 @@ func TestFetcher_Fetch(t *testing.T) {
 				Method: "GET",
 				Host:   server.URL,
 			},
-			want: `{ "foo": "bar" }`,
-			err:  nil,
+			want: &entity.FetchResult{
+				Endpoint: entity.Endpoint{
+					Method: "GET",
+					Host:   server.URL,
+				},
+				Status:   200,
+				Response: `{ "foo": "bar" }`,
+			},
+			err: nil,
 		},
 		{
 			name: "success with query",
@@ -91,8 +98,18 @@ func TestFetcher_Fetch(t *testing.T) {
 					"foo": "bar",
 				},
 			},
-			want: `{ "bar": "baz" }`,
-			err:  nil,
+			want: &entity.FetchResult{
+				Endpoint: entity.Endpoint{
+					Method: "GET",
+					Host:   server.URL,
+					Query: map[string]interface{}{
+						"foo": "bar",
+					},
+				},
+				Status:   200,
+				Response: `{ "bar": "baz" }`,
+			},
+			err: nil,
 		},
 	}
 

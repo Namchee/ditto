@@ -8,7 +8,7 @@ import (
 )
 
 // FormatResult apply formatting to test result
-func FormatResult(result *entity.TestResult, status bool) string {
+func FormatResult(result *entity.RunnerResult, status bool) string {
 	if result.Error != nil {
 		return fmt.Sprintf(
 			"%s: %s %s = Failed to run test: %s",

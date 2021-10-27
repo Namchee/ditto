@@ -52,7 +52,7 @@ func main() {
 		errLogger.Fatalln(err)
 	}
 
-	channel := make(chan *entity.TestResult, len(data))
+	channel := make(chan *entity.RunnerResult, len(data))
 	wg := &sync.WaitGroup{}
 
 	infoLogger.Println("Running tests")
@@ -70,7 +70,12 @@ func main() {
 	}()
 
 	for result := range channel {
-		diff := utils.GetDiff(result.Result)
+		var bodies []string
+
+		for _, r := range result.Result {
+			bodies = append(bodies, r.Response)
+		}
+		diff := utils.GetDiff(bodies)
 		pass := len(diff) == 0
 
 		formatted := utils.FormatResult(result, pass)
