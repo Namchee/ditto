@@ -71,7 +71,9 @@ func main() {
 
 	for result := range channel {
 		diff := utils.GetDiff(result.Result)
-		formatted := utils.FormatResult(result, len(diff) > 0)
+		pass := len(diff) == 0
+
+		formatted := utils.FormatResult(result, pass)
 
 		fmt.Println(formatted)
 	}

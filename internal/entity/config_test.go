@@ -20,8 +20,9 @@ func TestReadConfiguration(t *testing.T) {
 			path:     "foo",
 			contents: []byte{},
 			want: &Configuration{
-				Directory: "ditto-test",
-				Strict:    false,
+				TestDirectory: "ditto-test",
+				LogDirectory:  "ditto-log",
+				Strict:        false,
 			},
 		},
 		{
@@ -29,17 +30,19 @@ func TestReadConfiguration(t *testing.T) {
 			path:     "ditto.config.json",
 			contents: []byte(`{ foo: "bar" }`),
 			want: &Configuration{
-				Directory: "ditto-test",
-				Strict:    false,
+				TestDirectory: "ditto-test",
+				LogDirectory:  "ditto-log",
+				Strict:        false,
 			},
 		},
 		{
 			name:     "should merge config",
 			path:     "ditto.config.json",
-			contents: []byte(`{ "directory": "bar", "strict": true }`),
+			contents: []byte(`{ "test_directory": "bar", "log_directory": "baz", "strict": true }`),
 			want: &Configuration{
-				Directory: "bar",
-				Strict:    true,
+				TestDirectory: "bar",
+				LogDirectory:  "baz",
+				Strict:        true,
 			},
 		},
 	}

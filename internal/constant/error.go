@@ -21,10 +21,16 @@ var (
 	ErrDecodeConfig = errors.New("[Configuration] Failed to decode config file. Ignoring configuration file.")
 )
 
+// Utils errors
+var (
+	ErrDirExist = errors.New("[MkDir] Failed to create directory. Directory already exists.")
+)
+
 // Dynamic error templates
 const (
 	ErrFileOpen      = "[Reader] Failed to open file %s"
 	ErrFileParse     = "[Reader] Failed to parse file %s"
 	ErrFileInvalid   = "[Reader] Invalid file format for file %s"
 	ErrFetchResponse = "[Fetcher] Failed to fetch response: %s"
+	ErrDirFailed     = "[MkDir] Failed to create directory: %s"
 )

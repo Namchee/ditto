@@ -13,11 +13,11 @@ import (
 
 // GetDefs searchs desired test directory for test definition
 func GetDefs(fsys fs.FS, config *entity.Configuration, logger *log.Logger) ([]fs.File, error) {
-	if !utils.IsDirExist(fsys, config.Directory) {
+	if !utils.IsDirExist(fsys, config.TestDirectory) {
 		return nil, constant.ErrNoDir
 	}
 
-	dir, err := fs.ReadDir(fsys, config.Directory)
+	dir, err := fs.ReadDir(fsys, config.TestDirectory)
 	if err != nil {
 		return nil, constant.ErrListDir
 	}
@@ -29,7 +29,7 @@ func GetDefs(fsys fs.FS, config *entity.Configuration, logger *log.Logger) ([]fs
 
 		if filepath.Ext(name) == ".json" {
 			file, err := fsys.Open(
-				fmt.Sprintf("%s/%s", config.Directory, name),
+				fmt.Sprintf("%s/%s", config.TestDirectory, name),
 			)
 
 			if err != nil {

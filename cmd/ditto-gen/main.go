@@ -10,6 +10,7 @@ import (
 
 	"github.com/Namchee/ditto/internal/constant"
 	"github.com/Namchee/ditto/internal/entity"
+	"github.com/Namchee/ditto/internal/utils"
 )
 
 var (
@@ -39,25 +40,25 @@ func main() {
 		testname = os.Args[2]
 	}
 
-	if !strings.HasSuffix(testname, ".json") {
-		testname += ".json"
+	if !strings.HasSuffix(filename, ".json") {
+		filename += ".json"
 	}
 
 	infoLogger.Println("Checking test directory availabilty")
 
-	if _, err := fs.Stat(fsys, config.Directory); os.IsNotExist(err) {
-		infoLogger.Println("Creating test directory")
-
-		testDir := fmt.Sprintf("%s/%s", cwd, config.Directory)
-		err = os.MkdirAll(testDir, os.ModePerm)
+	if !utils.IsDirExist(fsys, config.TestDirectory) {
+		err := utils.Mkdir(
+			fsys,
+			fmt.Sprintf("%s/%s", cwd, config.TestDirectory),
+		)
 
 		if err != nil {
-			errLogger.Fatalln("❌ Failed to create test directory")
+			errLogger.Fatalln(err)
 		}
 	}
 
 	infoLogger.Println("Creating new sample test file")
-	filePath := fmt.Sprintf("%s/%s", config.Directory, filename)
+	filePath := fmt.Sprintf("%s/%s", config.TestDirectory, filename)
 
 	if _, err := fs.Stat(fsys, filePath); os.IsNotExist(err) {
 		testDef := fmt.Sprintf(constant.TestTemplate, testname)
@@ -67,7 +68,7 @@ func main() {
 			errLogger.Fatalln("❌ Failed to create sample test file.")
 		}
 
-		infoLogger.Printf("✔️ Successfully created new sample test file %s\n", filename)
+		infoLogger.Printf("✅ Successfully created new sample test file %s\n", filename)
 	} else {
 		errLogger.Fatalln("❌ Failed to create sample test file. File already exist.")
 	}

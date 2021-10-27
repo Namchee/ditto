@@ -10,14 +10,16 @@ import (
 
 // Configuration alters config
 type Configuration struct {
-	Directory string `json:"directory"`
-	Strict    bool   `json:"strict"`
+	TestDirectory string `json:"test_directory"`
+	LogDirectory  string `json:"log_directory"`
+	Strict        bool   `json:"strict"`
 }
 
 // ReadConfiguration searchs and parses ditto configuration file in the current working directory
 func ReadConfiguration(fsys fs.FS, logger *log.Logger) *Configuration {
 	config := Configuration{
-		Directory: constant.DefaultTestDir,
+		TestDirectory: constant.DefaultTestDir,
+		LogDirectory:  constant.DefaultLogDir,
 	}
 
 	if _, err := fs.Stat(fsys, constant.ConfigurationFilename); err == nil {
