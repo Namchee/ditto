@@ -21,7 +21,7 @@ func WriteTestLog(result *entity.RunnerResult, fsys fs.FS, config *entity.Config
 	}
 
 	contents, _ := json.MarshalIndent(result.Result, "", "\t")
-	err := os.WriteFile(file, []byte(contents), 0755)
+	err := os.WriteFile(file, []byte(contents), constant.FilePerms)
 
 	return err
 }

@@ -61,7 +61,7 @@ func main() {
 
 	if !utils.IsFileExist(fsys, filePath) {
 		testDef := fmt.Sprintf(constant.TestTemplate, testname)
-		err := os.WriteFile(filePath, []byte(testDef), 0755)
+		err := os.WriteFile(filePath, []byte(testDef), constant.FilePerms)
 
 		if err != nil {
 			errLogger.Fatalln("❌ Failed to create sample test file.")
