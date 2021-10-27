@@ -2,9 +2,9 @@ package entity
 
 // TestResult wraps a test runner result
 type TestResult struct {
-	Name  string
-	Error error
-	Diff  []int
+	Name   string
+	Error  error
+	Result []string
 }
 
 // TestResult wraps a fetcher result

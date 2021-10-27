@@ -44,7 +44,6 @@ func (r *TestRunner) RunTest(
 		ch <- &entity.TestResult{
 			Name:  r.data.Name,
 			Error: e,
-			Diff:  nil,
 		}
 		return
 	}
@@ -53,12 +52,9 @@ func (r *TestRunner) RunTest(
 		result = append(result, cha)
 	}
 
-	diff := GetDiff(result)
-
 	ch <- &entity.TestResult{
-		Name:  r.data.Name,
-		Error: nil,
-		Diff:  diff,
+		Name:   r.data.Name,
+		Result: result,
 	}
 }
 

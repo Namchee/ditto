@@ -1,4 +1,4 @@
-package service
+package utils
 
 // GetDiff returns list of item index that have different value than first element
 func GetDiff(resp []string) []int {

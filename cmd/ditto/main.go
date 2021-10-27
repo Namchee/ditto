@@ -9,6 +9,7 @@ import (
 
 	"github.com/Namchee/ditto/internal/entity"
 	"github.com/Namchee/ditto/internal/service"
+	"github.com/Namchee/ditto/internal/utils"
 )
 
 var (
@@ -69,7 +70,8 @@ func main() {
 	}()
 
 	for result := range channel {
-		formatted := service.FormatResult(result)
+		diff := utils.GetDiff(result.Result)
+		formatted := utils.FormatResult(result, len(diff) > 0)
 
 		fmt.Println(formatted)
 	}

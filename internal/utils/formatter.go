@@ -1,15 +1,14 @@
-package service
+package utils
 
 import (
 	"fmt"
 
 	"github.com/Namchee/ditto/internal/constant"
 	"github.com/Namchee/ditto/internal/entity"
-	"github.com/Namchee/ditto/internal/utils"
 )
 
 // FormatResult apply formatting to test result
-func FormatResult(result *entity.TestResult) string {
+func FormatResult(result *entity.TestResult, status bool) string {
 	if result.Error != nil {
 		return fmt.Sprintf(
 			"%s: %s %s = Failed to run test: %s",
@@ -24,13 +23,10 @@ func FormatResult(result *entity.TestResult) string {
 	text := constant.PassText
 	format := "%s: %s %s"
 
-	if len(result.Diff) != 0 {
+	if !status {
 		emoji = constant.FailEmoji
 		text = constant.FailText
-		format += fmt.Sprintf(
-			" = Endpoint(s) with index %s have different result(s)",
-			utils.IntSliceToString(result.Diff),
-		)
+		format += ". Please check the generated test log."
 	}
 
 	return fmt.Sprintf(format, result.Name, emoji, text)

@@ -1,4 +1,4 @@
-package service
+package utils
 
 import (
 	"errors"
@@ -10,40 +10,44 @@ import (
 
 func TestFormatResult(t *testing.T) {
 	tests := []struct {
-		name string
-		args *entity.TestResult
-		want string
+		name   string
+		args   *entity.TestResult
+		status bool
+		want   string
 	}{
 		{
 			name: "should format error test",
 			args: &entity.TestResult{
-				Name:  "TestThisOne",
-				Error: errors.New("foo bar"),
-				Diff:  []int{},
+				Name:   "TestThisOne",
+				Error:  errors.New("foo bar"),
+				Result: []string{},
 			},
-			want: "TestThisOne: ❌ FAIL = Failed to run test: foo bar",
+			status: false,
+			want:   "TestThisOne: ❌ FAIL = Failed to run test: foo bar",
 		},
 		{
 			name: "should format passed test",
 			args: &entity.TestResult{
-				Name: "TestThisOne",
-				Diff: []int{},
+				Name:   "TestThisOne",
+				Result: []string{},
 			},
-			want: "TestThisOne: ✅ PASS",
+			status: true,
+			want:   "TestThisOne: ✅ PASS",
 		},
 		{
 			name: "should format failed test",
 			args: &entity.TestResult{
-				Name: "TestThisOne",
-				Diff: []int{1},
+				Name:   "TestThisOne",
+				Result: []string{},
 			},
-			want: "TestThisOne: ❌ FAIL = Endpoint(s) with index 1 have different result(s)",
+			status: false,
+			want:   "TestThisOne: ❌ FAIL. Please check the generated test log.",
 		},
 	}
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			got := FormatResult(tc.args)
+			got := FormatResult(tc.args, tc.status)
 
 			assert.Equal(t, tc.want, got)
 		})
