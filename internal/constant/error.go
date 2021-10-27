@@ -16,9 +16,10 @@ var (
 
 // Config errors
 var (
-	ErrNoConfig     = errors.New("[Configuration] Missing config file. Using default configuration.")
-	ErrReadConfig   = errors.New("[Configuration] Failed to read config file. Ignoring configuration file.")
-	ErrDecodeConfig = errors.New("[Configuration] Failed to decode config file. Ignoring configuration file.")
+	ErrNoConfig      = errors.New("[Configuration] Missing config file. Using default configuration.")
+	ErrReadConfig    = errors.New("[Configuration] Failed to read config file. Ignoring configuration file.")
+	ErrDecodeConfig  = errors.New("[Configuration] Failed to decode config file. Ignoring configuration file.")
+	ErrInvalidConfig = errors.New("[Configuration] Invalid configuration file. Ignoring configuration file.")
 )
 
 // Utils errors

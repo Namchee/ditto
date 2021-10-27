@@ -8,8 +8,8 @@ import (
 	"github.com/Namchee/ditto/internal/constant"
 )
 
-// IsDirExist checks if a directory exists or not
-func IsDirExist(fsys fs.FS, name string) bool {
+// IsFileExist checks if a directory exists or not
+func IsFileExist(fsys fs.FS, name string) bool {
 	_, err := fs.Stat(fsys, name)
 
 	return err == nil

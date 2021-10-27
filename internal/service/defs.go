@@ -13,7 +13,7 @@ import (
 
 // GetDefs searchs desired test directory for test definition
 func GetDefs(fsys fs.FS, config *entity.Configuration, logger *log.Logger) ([]fs.File, error) {
-	if !utils.IsDirExist(fsys, config.TestDirectory) {
+	if !utils.IsFileExist(fsys, config.TestDirectory) {
 		return nil, constant.ErrNoDir
 	}
 

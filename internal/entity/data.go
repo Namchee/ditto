@@ -13,5 +13,5 @@ type Endpoint struct {
 	Query   map[string]interface{} `json:"query"`
 	Body    map[string]interface{} `json:"body"`
 	Headers map[string]string      `json:"headers"`
-	Timeout int                    `json:"timeout" validate:"number"`
+	Timeout int                    `json:"timeout" validate:"gte=0"`
 }

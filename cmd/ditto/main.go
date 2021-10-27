@@ -24,14 +24,17 @@ func init() {
 
 func main() {
 	infoLogger.Println("Initializing ditto")
-	// Prevent infinite go routine spawn
-	runtime.GOMAXPROCS(4)
 
 	cwd, _ := os.Getwd()
 	fsys := os.DirFS(cwd)
 
 	infoLogger.Println("Reading configuration file")
 	config := entity.ReadConfiguration(fsys, infoLogger)
+
+	// Prevent infinite go routine spawn
+	if config.Worker > 0 {
+		runtime.GOMAXPROCS(config.Worker)
+	}
 
 	infoLogger.Println("Reading test files")
 	files, err := service.GetDefs(fsys, config, infoLogger)
@@ -69,6 +72,8 @@ func main() {
 		close(channel)
 	}()
 
+	var fails []*entity.RunnerResult
+
 	for result := range channel {
 		var bodies []string
 
@@ -79,7 +84,22 @@ func main() {
 		pass := len(diff) == 0
 
 		formatted := utils.FormatResult(result, pass)
-
 		fmt.Println(formatted)
+
+		if !pass {
+			fails = append(fails, result)
+		}
+	}
+
+	if len(fails) > 0 {
+		infoLogger.Println("Writing test logs")
+
+		if !utils.IsFileExist(fsys, config.LogDirectory) {
+			err := utils.Mkdir(fsys, config.LogDirectory)
+
+			if err != nil {
+				errLogger.Fatalln(err)
+			}
+		}
 	}
 }

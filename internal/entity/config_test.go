@@ -23,6 +23,8 @@ func TestReadConfiguration(t *testing.T) {
 				TestDirectory: "ditto-test",
 				LogDirectory:  "ditto-log",
 				Strict:        false,
+				Worker:        0,
+				Status:        false,
 			},
 		},
 		{
@@ -33,16 +35,32 @@ func TestReadConfiguration(t *testing.T) {
 				TestDirectory: "ditto-test",
 				LogDirectory:  "ditto-log",
 				Strict:        false,
+				Worker:        0,
+				Status:        false,
+			},
+		},
+		{
+			name:     "should ignore invalid config",
+			path:     "ditto.config.json",
+			contents: []byte(`{ "test_directory": "bar", "log_directory": "baz", "strict": true, "worker": -1 }`),
+			want: &Configuration{
+				TestDirectory: "ditto-test",
+				LogDirectory:  "ditto-log",
+				Strict:        false,
+				Worker:        0,
+				Status:        false,
 			},
 		},
 		{
 			name:     "should merge config",
 			path:     "ditto.config.json",
-			contents: []byte(`{ "test_directory": "bar", "log_directory": "baz", "strict": true }`),
+			contents: []byte(`{ "test_directory": "bar", "log_directory": "baz", "strict": true, "worker": 2 }`),
 			want: &Configuration{
 				TestDirectory: "bar",
 				LogDirectory:  "baz",
 				Strict:        true,
+				Worker:        2,
+				Status:        false,
 			},
 		},
 	}

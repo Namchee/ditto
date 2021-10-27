@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/fs"
 	"log"
 	"os"
 	"strings"
@@ -46,7 +45,7 @@ func main() {
 
 	infoLogger.Println("Checking test directory availabilty")
 
-	if !utils.IsDirExist(fsys, config.TestDirectory) {
+	if !utils.IsFileExist(fsys, config.TestDirectory) {
 		err := utils.Mkdir(
 			fsys,
 			fmt.Sprintf("%s/%s", cwd, config.TestDirectory),
@@ -60,7 +59,7 @@ func main() {
 	infoLogger.Println("Creating new sample test file")
 	filePath := fmt.Sprintf("%s/%s", config.TestDirectory, filename)
 
-	if _, err := fs.Stat(fsys, filePath); os.IsNotExist(err) {
+	if !utils.IsFileExist(fsys, filePath) {
 		testDef := fmt.Sprintf(constant.TestTemplate, testname)
 		err := os.WriteFile(filePath, []byte(testDef), 0755)
 
