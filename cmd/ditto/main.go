@@ -95,5 +95,22 @@ func main() {
 				errLogger.Fatalln(err)
 			}
 		}
+
+		for _, fail := range fails {
+			err := service.WriteTestLog(fail, fsys, config)
+
+			if err != nil {
+				infoLogger.Printf(
+					"[Log] Failed to write test logs for %s. Skipping...",
+					fail.Name,
+				)
+			}
+		}
+	}
+
+	if len(fails) > 0 {
+		fmt.Println("❌ Tests failed")
+	} else {
+		fmt.Println("✅ All tests passed")
 	}
 }

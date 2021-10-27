@@ -34,4 +34,5 @@ const (
 	ErrFileInvalid   = "[Reader] Invalid file format for file %s"
 	ErrFetchResponse = "[Fetcher] Failed to fetch response: %s"
 	ErrDirFailed     = "[MkDir] Failed to create directory: %s"
+	ErrLogExist      = "[Log] Failed to create log file for %s. File already exist"
 )
