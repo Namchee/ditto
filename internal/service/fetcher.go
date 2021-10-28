@@ -26,7 +26,7 @@ func NewFetcher(ep entity.Endpoint) *Fetcher {
 	return &Fetcher{
 		endpoint: ep,
 		client: &http.Client{
-			Timeout: time.Duration(ep.Timeout),
+			Timeout: time.Duration(ep.Timeout) * time.Second,
 		},
 	}
 }
