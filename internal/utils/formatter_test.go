@@ -23,7 +23,7 @@ func TestFormatResult(t *testing.T) {
 				Result: []*entity.FetchResult{},
 			},
 			status: false,
-			want:   "TestThisOne: ❌ FAIL = Failed to run test: foo bar",
+			want:   "TestThisOne: ❌ FAIL. Please check the generated test log.",
 		},
 		{
 			name: "should format passed test",

@@ -59,7 +59,7 @@ func TestFetcher_Fetch(t *testing.T) {
 				Method: "GET",
 			},
 			want: nil,
-			err:  errors.New(`[Fetcher] Failed to fetch response: Get "": unsupported protocol scheme ""`),
+			err:  errors.New(`Get "": unsupported protocol scheme ""`),
 		},
 		{
 			name: "should throw an error when response body is malformed",

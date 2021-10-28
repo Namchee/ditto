@@ -29,10 +29,9 @@ var (
 
 // Dynamic error templates
 const (
-	ErrFileOpen      = "[Reader] Failed to open file %s"
-	ErrFileParse     = "[Reader] Failed to parse file %s"
-	ErrFileInvalid   = "[Reader] Invalid file format for file %s"
-	ErrFetchResponse = "[Fetcher] Failed to fetch response: %s"
-	ErrDirFailed     = "[MkDir] Failed to create directory: %s"
-	ErrLogExist      = "[Log] Failed to create log file for %s. File already exist"
+	ErrFileOpen    = "[Reader] Failed to open file %s"
+	ErrFileParse   = "[Reader] Failed to parse file %s"
+	ErrFileInvalid = "[Reader] Invalid file format for file %s"
+	ErrDirFailed   = "[MkDir] Failed to create directory: %s"
+	ErrLogExist    = "[Log] Failed to create log file for %s. File already exist"
 )

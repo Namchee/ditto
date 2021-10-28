@@ -3,6 +3,7 @@ package service
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -56,7 +57,7 @@ func (f *Fetcher) Fetch() (*entity.FetchResult, error) {
 	resp, err := f.client.Do(request)
 
 	if err != nil {
-		return nil, fmt.Errorf(constant.ErrFetchResponse, err)
+		return nil, errors.New(err.Error())
 	}
 	defer resp.Body.Close()
 
