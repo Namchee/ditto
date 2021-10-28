@@ -8,7 +8,6 @@ import (
 
 	"github.com/Namchee/ditto/internal/constant"
 	"github.com/Namchee/ditto/internal/entity"
-	"github.com/Namchee/ditto/internal/utils"
 )
 
 type runnerResultLog struct {
@@ -21,10 +20,6 @@ type runnerResultLog struct {
 func WriteTestLog(result *entity.RunnerResult, fsys fs.FS, config *entity.Configuration) error {
 	name := fmt.Sprintf("%s.json", result.Name)
 	file := fmt.Sprintf("%s/%s", config.LogDirectory, name)
-
-	if utils.IsFileExist(fsys, file) {
-		return fmt.Errorf(constant.ErrLogExist, name)
-	}
 
 	errMsg := ""
 

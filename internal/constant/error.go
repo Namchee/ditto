@@ -33,5 +33,4 @@ const (
 	ErrFileParse   = "[Reader] Failed to parse file %s"
 	ErrFileInvalid = "[Reader] Invalid file format for file %s"
 	ErrDirFailed   = "[MkDir] Failed to create directory: %s"
-	ErrLogExist    = "[Log] Failed to create log file for %s. File already exist"
 )
