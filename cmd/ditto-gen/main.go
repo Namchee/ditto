@@ -23,14 +23,17 @@ func init() {
 }
 
 func main() {
+	infoLogger.Println("Initializing ditto-gen")
 	cwd, _ := os.Getwd()
 	fsys := os.DirFS(cwd)
 
+	infoLogger.Println("Reading configuration files")
 	config := entity.ReadConfiguration(fsys, infoLogger)
 
 	filename := fmt.Sprintf("%d.json", time.Now().Unix())
 	testname := constant.DefaultTestName
 
+	infoLogger.Println("Reading shell inputs")
 	if len(os.Args) > 1 {
 		filename = os.Args[1]
 	}
@@ -46,10 +49,7 @@ func main() {
 	infoLogger.Println("Checking test directory availabilty")
 
 	if !utils.IsFileExist(fsys, config.TestDirectory) {
-		err := utils.Mkdir(
-			fsys,
-			fmt.Sprintf("%s/%s", cwd, config.TestDirectory),
-		)
+		err := utils.Mkdir(fsys, config.TestDirectory)
 
 		if err != nil {
 			errLogger.Fatalln(err)
