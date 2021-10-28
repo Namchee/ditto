@@ -20,7 +20,7 @@ func WriteTestLog(result *entity.RunnerResult, fsys fs.FS, config *entity.Config
 		return fmt.Errorf(constant.ErrLogExist, name)
 	}
 
-	contents, _ := json.MarshalIndent(result.Result, "", "\t")
+	contents, _ := json.MarshalIndent(result, "", "\t")
 	err := os.WriteFile(file, []byte(contents), constant.FilePerms)
 
 	return err

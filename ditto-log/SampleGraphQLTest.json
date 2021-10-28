@@ -1,0 +1,34 @@
+{
+	"Name": "SampleGraphQLTest",
+	"Error": null,
+	"Result": [
+		{
+			"host": "https://ojk-invest-api.vercel.app/api/graphql",
+			"method": "POST",
+			"query": null,
+			"body": {
+				"query": "{ apps(limit: 10) { data { name } } }"
+			},
+			"headers": {
+				"Accept": "application/json"
+			},
+			"timeout": 0,
+			"status": 200,
+			"response": "{\"data\":{\"apps\":{\"data\":[{\"name\":\"Ajaib\"},{\"name\":\"Ajaib Sekuritas\"},{\"name\":\"Mentimun Pay\"},{\"name\":\"Belanja Valbury Online\"},{\"name\":\"Bmoney\"},{\"name\":\"Digibank\"},{\"name\":\"GreatDay HR\"},{\"name\":\"IReksadana\"},{\"name\":\"MNC Trade\"},{\"name\":\"Octo dan CIMB Clicks\"}]}}}\n"
+		},
+		{
+			"host": "https://ojk-invest-api.vercel.app/api/graphql",
+			"method": "POST",
+			"query": null,
+			"body": {
+				"query": "{ products(limit: 10) { data { name } } }"
+			},
+			"headers": {
+				"Accept": "application/json"
+			},
+			"timeout": 0,
+			"status": 200,
+			"response": "{\"data\":{\"products\":{\"data\":[{\"name\":\"Avrist Balanced Amar Syariah\"},{\"name\":\"Avrist Equity Amar Syariah\"},{\"name\":\"Avrist Equity Cross Sectoral\"},{\"name\":\"Batavia Campuran Bertumbuh\"},{\"name\":\"BATAVIA DANA DINAMIS\"},{\"name\":\"BATAVIA DANA KAS CEMERLANG\"},{\"name\":\"BATAVIA DANA KAS GEBYAR\"},{\"name\":\"BATAVIA DANA OBLIGASI CEMERLANG\"},{\"name\":\"BATAVIA DANA OBLIGASI OPTIMAL\"},{\"name\":\"Batavia Dana Obligasi Unggulan\"}]}}}\n"
+		}
+	]
+}
