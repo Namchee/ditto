@@ -1,12 +1,9 @@
 {
-	"name": "SampleGraphQLTest",
+	"name": "SampleBadHostTest",
 	"endpoints": [
 		{
-			"host": "https://ojk-invest-api.vercel.app/api/graphql",
+			"host": "https://not-exist.com/api",
 			"method": "POST",
-			"body": {
-				"query": "{ apps(limit: 10) { data { name } } }"
-			},
 			"headers": {
 				"Accept": "application/json"
 			}

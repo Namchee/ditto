@@ -1,11 +1,11 @@
 {
-	"name": "SampleGraphQLTest",
+	"name": "SampleGraphQLFailTest",
 	"endpoints": [
 		{
 			"host": "https://ojk-invest-api.vercel.app/api/graphql",
 			"method": "POST",
 			"body": {
-				"query": "{ apps(limit: 10) { data { name } } }"
+				"query": "{ products(limit: 10) { data { name } } }"
 			},
 			"headers": {
 				"Accept": "application/json"

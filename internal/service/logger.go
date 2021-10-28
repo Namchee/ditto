@@ -11,6 +11,12 @@ import (
 	"github.com/Namchee/ditto/internal/utils"
 )
 
+type runnerResultLog struct {
+	Name   string                `json:"name"`
+	Err    string                `json:"error"`
+	Result []*entity.FetchResult `json:"result"`
+}
+
 // WriteTestLog writes test result in case of test fails
 func WriteTestLog(result *entity.RunnerResult, fsys fs.FS, config *entity.Configuration) error {
 	name := fmt.Sprintf("%s.json", result.Name)
@@ -20,7 +26,19 @@ func WriteTestLog(result *entity.RunnerResult, fsys fs.FS, config *entity.Config
 		return fmt.Errorf(constant.ErrLogExist, name)
 	}
 
-	contents, _ := json.MarshalIndent(result, "", "\t")
+	errMsg := ""
+
+	if result.Error != nil {
+		errMsg = result.Error.Error()
+	}
+
+	runnerLog := runnerResultLog{
+		Name:   result.Name,
+		Err:    errMsg,
+		Result: result.Result,
+	}
+
+	contents, _ := json.MarshalIndent(runnerLog, "", "\t")
 	err := os.WriteFile(file, []byte(contents), constant.FilePerms)
 
 	return err

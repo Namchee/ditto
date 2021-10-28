@@ -75,7 +75,7 @@ func main() {
 	var fails []*entity.RunnerResult
 
 	for result := range channel {
-		fail := utils.HasDiff(result.Result, config)
+		fail := result.Error != nil || utils.HasDiff(result.Result, config)
 
 		formatted := utils.FormatResult(result, !fail)
 		fmt.Println(formatted)
