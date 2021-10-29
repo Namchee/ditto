@@ -46,7 +46,7 @@ func main() {
 		filename += ".json"
 	}
 
-	infoLogger.Println("Checking test directory availabilty")
+	infoLogger.Println("Checking test directory availability")
 
 	if !utils.IsFileExist(fsys, config.TestDirectory) {
 		err := utils.Mkdir(fsys, config.TestDirectory)

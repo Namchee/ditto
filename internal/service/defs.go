@@ -11,7 +11,7 @@ import (
 	"github.com/Namchee/ditto/internal/utils"
 )
 
-// GetDefs searchs desired test directory for test definition
+// GetDefs searches desired test directory for test definition
 func GetDefs(fsys fs.FS, config *entity.Configuration, logger *log.Logger) ([]fs.File, error) {
 	if !utils.IsFileExist(fsys, config.TestDirectory) {
 		return nil, constant.ErrNoDir

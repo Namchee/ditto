@@ -18,7 +18,7 @@ type Configuration struct {
 	Status        bool   `json:"status"`
 }
 
-// ReadConfiguration searchs and parses ditto configuration file in the current working directory
+// ReadConfiguration searches and parses ditto configuration file in the current working directory
 func ReadConfiguration(fsys fs.FS, logger *log.Logger) *Configuration {
 	config := Configuration{
 		TestDirectory: constant.DefaultTestDir,
