@@ -1,14 +1,32 @@
 ## Ditto
 
-Ditto is a CLI testing tool that helps you verify if multiple HTTP endpoints have the same outputs. Ditto is designed to be performant out of the box by being able to execute tests in parallel without any extra steps.
-
-Ditto is also designed to be configurable out of the box by using a configuration file.
+Ditto is a CLI testing tool that helps you verify if multiple HTTP endpoints have the same outputs. 
 
 One of the use case of Ditto is regression testing between two or more HTTP endpoints.
 
+### Features
+
+1. Works with normal HTTP REST API and GraphQL endpoints with various stringifiable response bodies.
+2. Parallel test execution.
+3. Configurability.
+
 ### Installation
 
-TBD
+> Make sure that you have [Go](https://golang.org/doc/install) installed in your machine.
+
+Ditto comes with two separate binaries, `ditto` and `ditto-gen`. `ditto` is the core of Ditto that executes your tests while `ditto-gen` is a utility tool that helps you write tests for `ditto`.
+
+You can install Ditto by executing the following command in your terminal.
+
+```bash
+go install github.com/Namchee/ditto/cmd/ditto
+```
+
+To install `ditto-gen` instead, you can execute the following command.
+
+```bash
+go install github.com/Namchee/ditto/cmd/ditto-gen
+```
 
 ### Test Structure
 
@@ -25,18 +43,24 @@ An endpoint is defined as an object with the following format.
 
 Key | Type | Description
 --- | ---- | -----------
-`name` | `string` | Test name. Used when reporting test run results.
-`endpoints` | `Endpoints` | List of endpoints that should be tested.
+`host` | `string` | Host name. Must be an IP  or an URL.
+`method` | `string` | Case-sensitive HTTP method. Must be either `GET`, `POST`, `PUT`, `PATCH`, or `DELETE`
+`query` | `object` | Query object to be sent when sending HTTP request.
+`body` | `object` | Request body to be sent when sending HTTP request.
+`headers` | `object` | Request headers to be sent when sending HTTP request.
+`timeout` | `integer` | Endpoint timeout in seconds. A test will automatically fail if an endpoint timeouts.
+
+Please refer to [ditto-test directory](./ditto-test) for test samples.
 
 ### Usage
 
 #### `ditto`
 
-TBD
+The `ditto` command is a command that runs predefined tests in the current working directory. This command does not accept any extra inputs.
 
 #### `ditto-gen`
 
-`ditto-gen` is a utility that helps you create your test definitions. `ditto-gen` can be executed from your terminal with the following command.
+The `ditto-gen` command is a utility command that helps you create your test definitions. `ditto-gen` can be executed from your terminal with the following command.
 
 ```bash
 ditto-gen <file_name> <test_name>
@@ -48,8 +72,6 @@ Name | Type | Description
 --- | ---- | -----------
 `filename` | `string` | Test file name. Should be suffixed with `.json`.
 `testname` | `string` | Test name. Used on reporting and test execution logs.
-
-
 
 ### Configuration
 
@@ -64,6 +86,18 @@ Name | Type | Default | Description
 `strict` | `boolean` | `false` | Determine if Ditto should stop test execution when one or more test definitions are invalid.
 `workers` | `integer` | `<all_cores>` | Determine the maximum number of tests that should be executed in parallel.
 `status` | `boolean` | `false` | Determine if passing tests should also require the same HTTP response status.
+
+### Test Logs
+
+When a test fails, Ditto will attempt to log the test execution result in a folder with the same name as `log_directory` in JSON format. A test log will be named with the test name corresponding to the test data.
+
+Test logs is an object with the following properties.
+
+Name | Type | Default | Description
+---- | ---- | ------- | -----------
+`name` | `string` | `ditto-test` | Test name.
+`err` | `string` | `ditto-log` | Test errors when calling the endpoint.
+`result` | `[]Endpoint` | Fetch result. 
 
 ### License
 
