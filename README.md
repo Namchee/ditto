@@ -1,5 +1,7 @@
 ## Ditto
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/Namchee/ditto)](https://goreportcard.com/report/github.com/Namchee/ditto)
+
 Ditto is a CLI testing tool that helps you verify if multiple HTTP endpoints have the same outputs. 
 
 One of the use case of Ditto is regression testing between two or more HTTP endpoints.
