@@ -99,7 +99,47 @@ Name | Type | Default | Description
 ---- | ---- | ------- | -----------
 `name` | `string` | `ditto-test` | Test name.
 `err` | `string` | `ditto-log` | Test errors when calling the endpoint.
-`result` | `[]Endpoint` | Fetch result. 
+`result` | `[]Endpoint` | Fetch result.
+
+### GraphQL Testing
+
+This tool can also be used to test GraphQL queries and mutation. However, you cannot test two different query and mutations and expecting the same result. For example:
+
+```
+{
+    a {
+        foo
+    }
+}
+```
+
+```
+{
+    b {
+        foo
+    }    
+}
+```
+
+Although the above queries returns the exact same result, `ditto` will always mark the test as fail since the query name is different.
+
+To address those issues, you can use [GraphQL alias](https://graphql.org/learn/queries/#aliases). For example, the test above should be executed as:
+
+```
+{
+    data: a {
+        foo
+    }
+}
+```
+
+```
+{
+    data: b {
+        foo
+    }
+}
+```
 
 ### License
 
