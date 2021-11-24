@@ -106,11 +106,19 @@ Name | Type | Default | Description
 This tool can also be used to test GraphQL queries and mutation. However, you cannot test two different query and mutations and expecting the same result. For example:
 
 ```
-{\n  a {\n    foo\n  }\n}
+{
+    a {
+        foo
+    }
+}
 ```
 
 ```
-{\n  b {\n    foo\n  }\n}
+{
+    b {
+        foo
+    }    
+}
 ```
 
 Although the above queries returns the exact same result, `ditto` will always mark the test as fail since the query name is different.
@@ -118,11 +126,19 @@ Although the above queries returns the exact same result, `ditto` will always ma
 To address those issues, you can use [GraphQL alias](https://graphql.org/learn/queries/#aliases). For example, the test above should be executed as:
 
 ```
-{\n  data: a {\n    foo\n  }\n}
+{
+    data: a {
+        foo
+    }
+}
 ```
 
 ```
-{\n  data: b {\n    foo\n  }\n}
+{
+    data: b {
+        foo
+    }
+}
 ```
 
 ### License
