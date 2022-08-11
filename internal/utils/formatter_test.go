@@ -18,9 +18,9 @@ func TestFormatResult(t *testing.T) {
 		{
 			name: "should format error test",
 			args: &entity.RunnerResult{
-				Name:   "TestThisOne",
-				Error:  errors.New("foo bar"),
-				Result: []*entity.FetchResult{},
+				Name:      "TestThisOne",
+				Error:     errors.New("foo bar"),
+				Responses: []*entity.FetchResult{},
 			},
 			status: false,
 			want:   "TestThisOne: ❌ FAIL. Please check the generated test log.",
@@ -28,8 +28,8 @@ func TestFormatResult(t *testing.T) {
 		{
 			name: "should format passed test",
 			args: &entity.RunnerResult{
-				Name:   "TestThisOne",
-				Result: []*entity.FetchResult{},
+				Name:      "TestThisOne",
+				Responses: []*entity.FetchResult{},
 			},
 			status: true,
 			want:   "TestThisOne: ✅ PASS",
@@ -37,8 +37,8 @@ func TestFormatResult(t *testing.T) {
 		{
 			name: "should format failed test",
 			args: &entity.RunnerResult{
-				Name:   "TestThisOne",
-				Result: []*entity.FetchResult{},
+				Name:      "TestThisOne",
+				Responses: []*entity.FetchResult{},
 			},
 			status: false,
 			want:   "TestThisOne: ❌ FAIL. Please check the generated test log.",

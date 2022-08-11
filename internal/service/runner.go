@@ -53,8 +53,8 @@ func (r *TestRunner) RunTest(
 	}
 
 	ch <- &entity.RunnerResult{
-		Name:   r.data.Name,
-		Result: result,
+		Name:      r.data.Name,
+		Responses: result,
 	}
 }
 

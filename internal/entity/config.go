@@ -16,6 +16,7 @@ type Configuration struct {
 	Strict        bool   `json:"strict"`
 	Worker        int    `json:"worker" validate:"gte=1"`
 	Status        bool   `json:"status"`
+	Parse         bool   `json:"parse"`
 }
 
 // ReadConfiguration searches and parses ditto configuration file in the current working directory

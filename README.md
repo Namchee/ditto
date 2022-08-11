@@ -85,9 +85,10 @@ Name | Type | Default | Description
 ---- | ---- | ------- | -----------
 `test_directory` | `string` | `ditto-test` | Test directory which stores all test definitions that are going to be executed by Ditto.
 `log_directory` | `string` | `ditto-log` | Test execution log directory which stores all test logs when one or more tests are failing.
-`strict` | `boolean` | `false` | Determine if Ditto should stop test execution when one or more test definitions are invalid.
-`workers` | `integer` | `<all_cores>` | Determine the maximum number of tests that should be executed in parallel.
-`status` | `boolean` | `false` | Determine if passing tests should also require the same HTTP response status.
+`strict` | `boolean` | `false` | Stops test execution when one or more test definitions are invalid.
+`workers` | `integer` | `<all_cores>` | Maximum number of tests that can be executed in parallel.
+`status` | `boolean` | `false` | Require the same HTTP response status for all tests.
+`parse` | `boolean` | `false` | Write HTTP responses as JSON instead of raw string in test reports. If the parsing fails, `ditto` will write it as a string instead.
 
 ### Test Logs
 
@@ -98,8 +99,8 @@ Test logs is an object with the following properties.
 Name | Type | Default | Description
 ---- | ---- | ------- | -----------
 `name` | `string` | `ditto-test` | Test name.
-`err` | `string` | `ditto-log` | Test errors when calling the endpoint.
-`result` | `[]Endpoint` | Fetch result.
+`error` | `string` | `ditto-log` | Test errors when calling the endpoint.
+`result` | `[]Endpoint` | Fetch result. 
 
 ### GraphQL Testing
 

@@ -1,5 +1,6 @@
 {
     "test_directory": "custom-test-folder",
     "log_directory": "custom-test-logs-folder",
-    "worker": 4
+    "worker": 4,
+    "parse": true
 }
