@@ -99,7 +99,7 @@ Test logs is an object with the following properties.
 Name | Type | Default | Description
 ---- | ---- | ------- | -----------
 `name` | `string` | `ditto-test` | Test name.
-`err` | `string` | `ditto-log` | Test errors when calling the endpoint.
+`error` | `string` | `ditto-log` | Test errors when calling the endpoint.
 `result` | `[]Endpoint` | Fetch result. 
 
 ### License
