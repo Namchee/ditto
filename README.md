@@ -88,7 +88,7 @@ Name | Type | Default | Description
 `strict` | `boolean` | `false` | Stops test execution when one or more test definitions are invalid.
 `workers` | `integer` | `<all_cores>` | Maximum number of tests that can be executed in parallel.
 `status` | `boolean` | `false` | Require the same HTTP response status for all tests.
-`parse` | `boolean` | `false` | Write HTTP responses as JSON instead of raw string in test reports.
+`parse` | `boolean` | `false` | Write HTTP responses as JSON instead of raw string in test reports. If the parsing fails, `ditto` will write it as a string instead.
 
 ### Test Logs
 

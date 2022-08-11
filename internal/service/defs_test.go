@@ -1,6 +1,8 @@
 package service
 
-import "testing"
+import (
+	"testing"
+)
 
 // TODO: Write this
 func TestGetDefs(t *testing.T) {
