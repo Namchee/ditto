@@ -8,11 +8,15 @@ import (
 
 // TestRunner runs and executes test concurrently
 type TestRunner struct {
-	data *entity.TestData
+	data   *entity.TestData
+	config *entity.Configuration
 }
 
 // NewTestRunner creates a new test runner that executes test concurrently
-func NewTestRunner(data *entity.TestData) *TestRunner {
+func NewTestRunner(
+	data *entity.TestData,
+	config *entity.Configuration,
+) *TestRunner {
 	return &TestRunner{
 		data: data,
 	}
@@ -65,7 +69,7 @@ func (r *TestRunner) wrapFetcher(
 	errC chan<- error,
 ) {
 	defer wg.Done()
-	result, err := f.Fetch()
+	result, err := f.Fetch(r.config.Parse)
 
 	if err != nil {
 		errC <- err

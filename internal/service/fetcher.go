@@ -32,7 +32,7 @@ func NewFetcher(ep entity.Endpoint) *Fetcher {
 }
 
 // Fetch constructs request, send the request, and return a response string from it
-func (f *Fetcher) Fetch() (*entity.FetchResult, error) {
+func (f *Fetcher) Fetch(parse bool) (*entity.FetchResult, error) {
 	query := url.Values{}
 
 	for k, v := range f.endpoint.Query {
@@ -67,9 +67,21 @@ func (f *Fetcher) Fetch() (*entity.FetchResult, error) {
 		return nil, constant.ErrReadResponse
 	}
 
+	var response interface{}
+	response = string(body)
+
+	if parse {
+		var temp interface{}
+
+		err := json.Unmarshal(body, &temp)
+		if err == nil {
+			response = temp
+		}
+	}
+
 	return &entity.FetchResult{
 		Status:   resp.StatusCode,
-		Response: string(body),
+		Response: response,
 		Endpoint: f.endpoint,
 	}, nil
 }

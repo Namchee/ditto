@@ -117,7 +117,7 @@ func TestFetcher_Fetch(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			f := NewFetcher(tc.endpoint)
 
-			got, err := f.Fetch()
+			got, err := f.Fetch(false)
 
 			fmt.Println(err)
 			assert.Equal(t, tc.want, got)

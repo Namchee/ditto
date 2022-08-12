@@ -60,7 +60,7 @@ func main() {
 
 	infoLogger.Println("Running tests")
 	for _, d := range data {
-		runner := service.NewTestRunner(d)
+		runner := service.NewTestRunner(d, config)
 		wg.Add(1)
 
 		infoLogger.Printf("Executing test %s", d.Name)

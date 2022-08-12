@@ -3,7 +3,7 @@ package entity
 // TestData defines services to be tested
 type TestData struct {
 	Name      string     `json:"name" validate:"required"`
-	Endpoints []Endpoint `json:"endpoints" validate:"required,eq=2,dive"`
+	Endpoints []Endpoint `json:"endpoints" validate:"required,gt=1,dive"`
 }
 
 // Endpoint contains endpoint information to be tested
