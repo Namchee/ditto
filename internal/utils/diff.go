@@ -10,7 +10,13 @@ func HasDiff(
 	resp []*entity.FetchResult,
 	config *entity.Configuration,
 ) []diff.Changelog {
-	changes, err := diff.Diff(resp[0], resp[1])
+	changelogs := []diff.Changelog{}
 
-	changes.
+	for idx := 1; idx < len(resp); idx++ {
+		changes, _ := diff.Diff(resp[0], resp[idx])
+
+		changelogs = append(changelogs, changes)
+	}
+
+	return changelogs
 }
