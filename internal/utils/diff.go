@@ -9,7 +9,7 @@ import (
 func HasDiff(
 	resp []*entity.FetchResult,
 	config *entity.Configuration,
-) []diff.Changelog {
+) (bool, []diff.Changelog) {
 	changelogs := []diff.Changelog{}
 
 	for idx := 1; idx < len(resp); idx++ {
@@ -18,5 +18,10 @@ func HasDiff(
 		changelogs = append(changelogs, changes)
 	}
 
-	return changelogs
+	hasDiff := false
+	for _, d := range changelogs {
+		hasDiff = len(d) > 0
+	}
+
+	return hasDiff, changelogs
 }

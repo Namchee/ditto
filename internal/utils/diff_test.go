@@ -78,12 +78,7 @@ func TestHasDiff(t *testing.T) {
 			config := &entity.Configuration{
 				Status: tc.config,
 			}
-			got := HasDiff(tc.args, config)
-
-			hasDiff := false
-			for _, d := range got {
-				hasDiff = len(d) > 0
-			}
+			hasDiff, _ := HasDiff(tc.args, config)
 
 			assert.Equal(t, tc.want, hasDiff)
 		})

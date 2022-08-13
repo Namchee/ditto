@@ -75,11 +75,7 @@ func main() {
 	var logs []*entity.TestLog
 
 	for result := range channel {
-		diff := utils.HasDiff(result.Responses, config)
-		hasDiff := false
-		for _, d := range diff {
-			hasDiff = len(d) > 0
-		}
+		hasDiff, diff := utils.HasDiff(result.Responses, config)
 
 		isFailed := result.Error != nil || hasDiff
 
