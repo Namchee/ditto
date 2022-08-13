@@ -18,7 +18,8 @@ func NewTestRunner(
 	config *entity.Configuration,
 ) *TestRunner {
 	return &TestRunner{
-		data: data,
+		data:   data,
+		config: config,
 	}
 }
 

@@ -13,7 +13,7 @@ func HasDiff(
 	changelogs := []diff.Changelog{}
 
 	for idx := 1; idx < len(resp); idx++ {
-		changes, _ := diff.Diff(resp[0], resp[idx])
+		changes, _ := diff.Diff(resp[0].Response, resp[idx].Response)
 
 		changelogs = append(changelogs, changes)
 	}

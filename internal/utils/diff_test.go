@@ -80,7 +80,12 @@ func TestHasDiff(t *testing.T) {
 			}
 			got := HasDiff(tc.args, config)
 
-			assert.Equal(t, tc.want, got)
+			hasDiff := false
+			for _, d := range got {
+				hasDiff = len(d) > 0
+			}
+
+			assert.Equal(t, tc.want, hasDiff)
 		})
 	}
 }

@@ -8,17 +8,19 @@ import (
 
 	"github.com/Namchee/ditto/internal/constant"
 	"github.com/Namchee/ditto/internal/entity"
+	"github.com/r3labs/diff/v3"
 )
 
 type runnerResultLog struct {
-	Name   string                `json:"name"`
-	Err    string                `json:"error"`
-	Result []*entity.FetchResult `json:"result"`
+	Name       string                `json:"name"`
+	Error      string                `json:"error"`
+	Result     []*entity.FetchResult `json:"result"`
+	Difference []diff.Changelog      `json:"difference"`
 }
 
 // WriteTestLog writes test result in case of test fails
 func WriteTestLog(
-	result *entity.RunnerResult,
+	result *entity.TestLog,
 	fsys fs.FS,
 	config *entity.Configuration,
 ) error {
@@ -26,26 +28,15 @@ func WriteTestLog(
 	file := fmt.Sprintf("%s/%s", config.LogDirectory, name)
 
 	errMsg := ""
-
 	if result.Error != nil {
 		errMsg = result.Error.Error()
 	}
 
-	if config.Parse {
-		for idx := range result.Responses {
-			var temp interface{}
-
-			err := json.Unmarshal([]byte(result.Responses[idx].Response.(string)), &temp)
-			if err == nil {
-				result.Responses[idx].Response = temp
-			}
-		}
-	}
-
 	runnerLog := runnerResultLog{
-		Name:   result.Name,
-		Err:    errMsg,
-		Result: result.Responses,
+		Name:       result.Name,
+		Error:      errMsg,
+		Result:     result.Responses,
+		Difference: result.Diff,
 	}
 
 	contents, _ := json.MarshalIndent(runnerLog, "", "\t")
