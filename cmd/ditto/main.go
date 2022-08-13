@@ -60,7 +60,7 @@ func main() {
 
 	infoLogger.Println("Running tests")
 	for _, d := range data {
-		runner := service.NewTestRunner(d)
+		runner := service.NewTestRunner(d, config)
 		wg.Add(1)
 
 		infoLogger.Printf("Executing test %s", d.Name)
@@ -72,20 +72,27 @@ func main() {
 		close(channel)
 	}()
 
-	var fails []*entity.RunnerResult
+	var logs []*entity.TestLog
 
 	for result := range channel {
-		fail := result.Error != nil || utils.HasDiff(result.Responses, config)
+		hasDiff, diff := utils.HasDiff(result.Responses, config)
 
-		formatted := utils.FormatResult(result, !fail)
+		isFailed := result.Error != nil || hasDiff
+
+		formatted := utils.FormatResult(result, !isFailed)
 		fmt.Println(formatted)
 
-		if fail {
-			fails = append(fails, result)
+		if isFailed {
+			log := &entity.TestLog{
+				RunnerResult: *result,
+				Diff:         diff,
+			}
+
+			logs = append(logs, log)
 		}
 	}
 
-	if len(fails) > 0 {
+	if len(logs) > 0 {
 		infoLogger.Println("Writing test logs")
 
 		if !utils.IsFileExist(fsys, config.LogDirectory) {
@@ -96,7 +103,7 @@ func main() {
 			}
 		}
 
-		for _, fail := range fails {
+		for _, fail := range logs {
 			err := service.WriteTestLog(fail, fsys, config)
 
 			if err != nil {
@@ -108,7 +115,7 @@ func main() {
 		}
 	}
 
-	if len(fails) > 0 {
+	if len(logs) > 0 {
 		fmt.Println("❌ Tests failed")
 	} else {
 		fmt.Println("✅ All tests passed")

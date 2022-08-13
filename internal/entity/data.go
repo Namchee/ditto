@@ -1,5 +1,7 @@
 package entity
 
+import "github.com/r3labs/diff/v3"
+
 // TestData defines services to be tested
 type TestData struct {
 	Name      string     `json:"name" validate:"required"`
@@ -14,4 +16,10 @@ type Endpoint struct {
 	Body    map[string]interface{} `json:"body"`
 	Headers map[string]string      `json:"headers"`
 	Timeout int                    `json:"timeout" validate:"gte=0"`
+}
+
+// TestLog is entity that extends `RunnerResult` by adding diff
+type TestLog struct {
+	RunnerResult
+	Diff []diff.Changelog
 }

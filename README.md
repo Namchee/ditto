@@ -11,6 +11,7 @@ One of the use case of Ditto is regression testing between two or more HTTP endp
 1. Works with normal HTTP REST API and GraphQL endpoints with various stringifiable response bodies.
 2. Parallel test execution.
 3. Configurability.
+4. Logging.
 
 ### Installation
 
@@ -41,7 +42,7 @@ Key | Type | Description
 `name` | `string` | Test name. Used when reporting test run results.
 `endpoints` | `[]Endpoints` | List of endpoints that should be tested. There must be at least two endpoints for a valid test definition.
 
-An endpoint is defined as an object with the following format.
+An `Endpoint` is defined as an object with the following properties.
 
 Key | Type | Description
 --- | ---- | -----------
@@ -100,7 +101,19 @@ Name | Type | Default | Description
 ---- | ---- | ------- | -----------
 `name` | `string` | `ditto-test` | Test name.
 `error` | `string` | `ditto-log` | Test errors when calling the endpoint.
-`result` | `[]Endpoint` | Fetch result. 
+`result` | `[]Endpoint` | Request and response for each endpoint.
+`difference` | `Difference` | Differences between results.
+
+A `Difference` is defined as an array of object with the following properties.
+
+Key | Type | Description
+--- | ---- | -----------
+`type` | `string` | Change type.
+`path` | `[]string` | Location of the change.
+`from` | `string` | Original value.
+`to` | `string` | Current value.
+
+For more information about the difference object, please follow the [library documentation](https://github.com/r3labs/diff).
 
 ### GraphQL Testing
 
